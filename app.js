@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 const express = require('express');
 const morgan = require('morgan');
 const storeRoute = require('./Route/storeRoute');
+const bookRoute = require('./Route/bookRoute');
 
 const app = express();
 app.use(express.json({ limit: '10kb' }));
@@ -24,3 +25,4 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/v1', storeRoute);
+app.use('/api/v1', bookRoute);

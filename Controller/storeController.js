@@ -29,7 +29,7 @@ exports.saveStore = async (req, res) => {
 
     const storeCode = util.generateStoreCode();
 
-    const values = [storeName, storeCode, address, createdBy, createdOn];
+    const values = [storeName, storeCode, address, createdOn, createdBy];
     const saveStoreQuery = queries.queryList.SAVE_STORE_QUERY;
     await dbConnection.dbQuery(saveStoreQuery, values);
     return res.status(201).send('Successfully store created');
