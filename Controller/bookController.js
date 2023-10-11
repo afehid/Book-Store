@@ -1,12 +1,15 @@
 const queries = require('../db/queries');
 const dbConnection = require('../db/connection');
 // const util = require('../Util/utility');
+const Logger = require('../services/loggerService');
 
+const logger = new Logger('bookController');
 exports.getBookList = async (req, res) => {
   try {
     const bookListQuery = queries.queryList.GET_BOOK_LIST_QUERY;
     const result = await dbConnection.dbQuery(bookListQuery);
-    console.log(result.rows);
+    // console.log(result.rows);
+    logger.info(`Return Book List:`, result.rows);
     return res.status(200).send(JSON.stringify(result.rows));
   } catch (err) {
     // console.log('Error:' + err);
@@ -22,7 +25,7 @@ exports.getBookDetails = async (req, res) => {
     // console.log(result.rows[0]);
     return res.status(200).send(JSON.stringify(result.rows[0]));
   } catch (err) {
-    console.log('Error:' + err);
+    console.log(`Error:${err}`);
     return res.status(500).send({ error: 'Failed to get book details' });
   }
 };
@@ -106,7 +109,7 @@ exports.updateBook = async (req, res) => {
     // console.log('Error:' + err);
     return res
       .status(500)
-      .send({ error: `failed to update book data: ${title} ` });
+      .send({ error: `failed to update book data: ${this.title} ` });
   }
 };
 
