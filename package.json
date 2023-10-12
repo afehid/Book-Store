@@ -4,18 +4,20 @@
   "description": "Booking Store Project",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon ./Server/server.js",
+    "test": "mocha --timeout 10000"
   },
   "author": "Ahmed Salah",
   "license": "ISC",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "body-parser": "^1.19.0",
+    "chai": "^4.3.10",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "memorystorage": "^0.12.0",
+    "mocha": "^10.2.0",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1",
     "npm": "^10.2.0",
@@ -35,7 +37,8 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
-    "prettier": "^1.17.0"
+    "prettier": "^1.17.0",
+    "supertest": "^6.3.3"
   },
   "engines": {
     "node": ">=10.0.0"
