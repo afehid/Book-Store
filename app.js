@@ -1,6 +1,8 @@
 const dotenv = require('dotenv');
 const express = require('express');
 const morgan = require('morgan');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 const storeRoute = require('./Route/storeRoute');
 const bookRoute = require('./Route/bookRoute');
 
@@ -23,6 +25,6 @@ app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v1', storeRoute);
 app.use('/api/v1', bookRoute);
