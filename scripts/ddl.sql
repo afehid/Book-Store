@@ -37,3 +37,18 @@ CREATE TABLE bms.store (
 	address varchar(200) NOT NULL,
 	CONSTRAINT store_pkey PRIMARY KEY (store_id)
 );
+
+
+-- app_audit
+
+CREATE TABLE bms.app_audit (
+
+	audit_id serial NOT NULL,
+	audit_action varchar(100) not null,
+	audit_data json null,
+	audit_status varchar(50) null,
+	audit_error json null,
+	audit_by varchar(50) not null,
+	audit_on timestamp not null,
+	constraint app_audit_pkey primary key (audit_id)
+)
