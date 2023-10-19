@@ -4,6 +4,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger.json');
 const storeRoute = require('../Route/storeRoute');
 const bookRoute = require('../Route/bookRoute');
+const userRoute = require('../Route/userRoute');
 
 const app = express();
 app.use(express.json({ limit: '10kb' }));
@@ -21,5 +22,6 @@ app.use((req, res, next) => {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v1', storeRoute);
 app.use('/api/v1', bookRoute);
+app.use('/api/v1', userRoute);
 
 module.exports = app;

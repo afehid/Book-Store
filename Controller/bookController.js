@@ -23,6 +23,7 @@ exports.getBookList = async (req, res) => {
     return res.status(200).send(JSON.stringify(result.rows));
   } catch (err) {
     console.log(`Fail to get books ,, Error:${err}`);
+    logger.error('Failed to get Book Details', JSON.stringify(err));
     auditService.prepareAudit(
       auditAction.getBookList,
       null,
@@ -40,9 +41,26 @@ exports.getBookDetails = async (req, res) => {
     // console.log(bookDetailsQuery);
     const result = await dbConnection.dbQuery(bookDetailsQuery, [bookId]);
     // console.log(result.rows[0]);
+    logger.info(`Return Book List:`, result.rows);
+    // console.log(result.rows);
+    auditService.prepareAudit(
+      auditAction.getBookList,
+      result.rows,
+      null,
+      'postman',
+      auditOn
+    );
     return res.status(200).send(JSON.stringify(result.rows[0]));
   } catch (err) {
-    console.log(`Error:${err}`);
+    // console.log(`Error:${err}`);
+    logger.error('Failed to get Book Details', JSON.stringify(err));
+    auditService.prepareAudit(
+      auditAction.getBookList,
+      null,
+      JSON.stringify(err),
+      'postman',
+      auditOn
+    );
     return res.status(500).send({ error: 'Failed to get book details' });
   }
 };
