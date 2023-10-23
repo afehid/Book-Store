@@ -1,8 +1,10 @@
 const PasswordValidator = require('password-validator');
+const bcrypt = require('bcryptjs');
 
 const passwordChecker = new PasswordValidator();
+
 exports.isValidEmail = email => {
-  const regEx = /\S+@\S\.\s+/;
+  const regEx = /\S+@\S+\.\S+/;
   return regEx.test(email);
 };
 
@@ -11,24 +13,28 @@ exports.isValidatePassword = password => {
   return true;
 };
 
+exports.comparePassword = (password, hashedPassword) => {
+  return bcrypt.compareSync(password, hashedPassword);
+};
+
 exports.isValidPassword = password => {
   passwordChecker
     .is()
-    .min(8) //Minimum length
+    .min(8) // Minimum length 8
     .is()
-    .max(15) //Maximum length
+    .max(15) // Maximum length 100
     .has()
-    .uppercase() //Must have uppercase characters
+    .uppercase() // Must have uppercase letters
     .has()
-    .lowercase() //Must have lowercase characters
+    .lowercase() // Must have lowercase letters
     .has()
-    .digits(2) //Must have at least 2 digits
+    .digits(2) // Must have at least 2 digits
     .has()
     .not()
-    .spaces() //Must have no spaces
+    .spaces() // Should not have spaces
     .is()
     .not()
-    .oneOf(['passw0rd', 'password123']); //Blacklist these values
+    .oneOf(['Passw0rd', 'Password123']); // Blacklist these values
 
   return passwordChecker.validate(password);
 };

@@ -17,13 +17,13 @@ exports.getUserList = async (req, res) => {
     const result = await dbConnection.dbQuery(userListQuery);
     logger.info(`Return User List:`, result.rows);
     // console.log(result.rows);
-    // auditService.prepareAudit(
-    //   auditAction.getBookList.GET_USER_LIST,
-    //   result.rows,
-    //   null,
-    //   'postman',
-    //   auditOn
-    // );
+    auditService.prepareAudit(
+      auditAction.getBookList.GET_USER_LIST,
+      result.rows,
+      null,
+      'postman',
+      auditOn
+    );
     return res.status(200).send(JSON.stringify(result.rows));
   } catch (err) {
     console.log(err, `Fail to get user ,, Error:${err}`);
@@ -52,7 +52,7 @@ exports.saveUser = async (req, res) => {
       fullName
       // groups
     } = req.body;
-    console.log(username, password, email, userTypeCode, fullName);
+    // console.log(username, password, email, userTypeCode, fullName);
     if (
       !username ||
       !password ||
@@ -72,16 +72,19 @@ exports.saveUser = async (req, res) => {
       username,
       email
     ]);
-    console.log(JSON.stringify(result));
-    if (result.rows[0].count != '0')
-      return result.status(500).send({ error: 'User Already Exists' });
+    console.log(`Result: ${JSON.stringify(result)}`);
+    console.log(result.rows[0]);
+    if (result.rows[0].count !== '0')
+      return res.status(500).send({ error: 'User already Exists' });
 
     if (!validationUtil.isValidEmail(email))
-      return res.status(500).send({ error: 'email is not valid' });
+      return res.status(500).send({ error: 'Email is not valid' });
+
     if (!validationUtil.isValidPassword(password))
-      return res.status(500).send({ error: 'password is not valid' });
+      return res.status(500).send({ error: 'Password is not valid' });
+
     //everything is OK
-    const hashedPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const values = [
       username,
       hashedPassword,
