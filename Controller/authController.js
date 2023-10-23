@@ -70,7 +70,7 @@ exports.signIn = async (req, res) => {
 // eslint-disable-next-line no-unused-vars
 exports.getUserRoles = async userId => {
   try {
-    //test
+    
     const userRoles = 'admin';
     return userRoles;
   } catch (error) {
