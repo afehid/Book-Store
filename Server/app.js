@@ -8,6 +8,7 @@ const bookRoute = require('../Route/bookRoute');
 const userRoute = require('../Route/userRoute');
 const loginRoute = require('../Route/loginRoute');
 const exportRoute = require('../Route/exportRoute');
+const paypalRoute = require('../Route/paypalRoute');
 
 // var bodyParser = require('body-parser');
 
@@ -31,11 +32,25 @@ app.get('/', function(req, res) {
   // res.send("Server started ........");
   res.sendFile(path.join(__dirname, '.././index.html'));
 });
+app.get('/payment', function(req, res) {
+  // res.send("Server started ........");
+  res.sendFile(path.join(__dirname, '.././payment.html'));
+});
+
+// success page
+app.get('/success', (req, res) => {
+  res.sendFile(path.join(__dirname, '.././success.html'));
+});
+// error page
+app.get('/err', (req, res) => {
+  res.sendFile(path.join(__dirname, '.././error.html'));
+});
 
 app.use('/api/v1', storeRoute);
 app.use('/api/v1', bookRoute);
 app.use('/api/v1', userRoute);
 app.use('/api/v1', loginRoute);
 app.use('/api/v1', exportRoute);
+app.use('/api/v1', paypalRoute);
 
 module.exports = app;
